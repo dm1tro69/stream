@@ -1,42 +1,54 @@
 import React, {useEffect, useState} from 'react'
+import {signIn, signOut} from "../actions";
+import {useDispatch, useSelector} from "react-redux";
 
 const API_KEY = process.env.REACT_APP_API_KEY
 
 const GoogleAuth = () => {
 
-    const [isSignedIn, setIsSignedIn] = useState(null)
+    const dispatch = useDispatch()
+    const isSignedIn = useSelector(state => state.auth.isSignedIn)
+    const [auth, setAuth] = useState(null);
+
+    // const [isSignedIn, setIsSignedIn] = useState(null)
 
     useEffect(()=> {
+        let auth
         window.gapi.load('client: auth2', ()=> {
             window.gapi.client.init({
                 clientId: API_KEY,
                 scope: 'email'
             }).then(() => {
-                let auth = window.gapi.auth2.getAuthInstance()
-                setIsSignedIn(auth.isSignedIn.get())
+                auth = window.gapi.auth2.getAuthInstance();
+                setAuth(auth);
+                onAuthChange(auth.isSignedIn.get())
                 // auth.auth.isSignedIn.listen(onAuthChange)
             })
         })
     }, [])
 
-    // const onAuthChange = () => {
-    //     setIsSignedIn(isSignedIn.get())
-    // }
+    const onAuthChange = (isSignedIn) => {
+        if (isSignedIn){
+            dispatch(signIn(auth.currentUser.get().getId()))
+        }else {
+            dispatch(signOut())
+        }
+    }
     
 
     const renderAuthButton = () => {
-        if (isSignedIn === null) {
-            return null
-        }else if (isSignedIn){
-            return <button onClick={()=> setIsSignedIn(false)} className={'ui red google button'}>
+        if (isSignedIn){
+            return <button onClick={()=> dispatch(signOut())} className={'ui red google button'}>
                 <i className="google icon"/>
                 Sign Out
             </button>
         }else {
-            return <button onClick={()=> setIsSignedIn(true)} className={'ui red google button'}>
-                <i className="google icon"/>
-                Sign In with Google
-            </button>
+            return (
+                <button onClick={()=> dispatch(signIn())} className={'ui red google button'}>
+                    <i className="google icon"/>
+                    Sign In with Google
+                </button>
+            )
         }
     }
 
