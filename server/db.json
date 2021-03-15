@@ -1,0 +1,45 @@
+{
+  "streams": [
+    {
+      "title": "qwe",
+      "description": "qwe",
+      "id": 1
+    },
+    {
+      "title": "other stream",
+      "description": "other stream",
+      "id": 2
+    },
+    {
+      "title": "qwerty",
+      "description": "123",
+      "id": 3
+    },
+    {
+      "title": "qwerty12",
+      "description": "123456",
+      "id": 4
+    },
+    {
+      "title": "qwerty12",
+      "description": "123456",
+      "id": 5
+    },
+    {
+      "title": "qwerty",
+      "description": "123",
+      "id": 6
+    },
+    {
+      "title": "I am stream",
+      "description": "i am create this stream",
+      "id": 7
+    },
+    {
+      "title": "id Stream",
+      "description": "I am create IDStream",
+      "userId": "105159306939484204218",
+      "id": 8
+    }
+  ]
+}

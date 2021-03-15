@@ -44,7 +44,7 @@ const GoogleAuth = () => {
             </button>
         }else {
             return (
-                <button onClick={()=> dispatch(signIn())} className={'ui red google button'}>
+                <button onClick={()=> dispatch(signIn(auth.currentUser.get().getId()))} className={'ui red google button'}>
                     <i className="google icon"/>
                     Sign In with Google
                 </button>
