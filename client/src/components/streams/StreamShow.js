@@ -14,9 +14,38 @@ const StreamShow = () => {
 
     const videoRef = useRef()
 
+
+
+
     useEffect(()=> {
         dispatch(fetchStream(id))
-    }, [])
+
+
+    }, [dispatch, id])
+    useEffect(() => {
+        const buildPlayer = () => {
+            if ( !stream) {
+                return;
+            }
+            const player = flv.createPlayer({
+                type: "flv",
+                url: `http://localhost:8000/live/${id}.flv`,
+            });
+
+            player.attachMediaElement(videoRef.current);
+            player.load();
+            return ()=> {
+                player.destroy()
+            }
+        };
+
+        buildPlayer();
+
+    }, [stream, id]);
+
+
+
+
     
     if (!stream){
         return <div>Loading...</div>
